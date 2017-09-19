@@ -1,7 +1,7 @@
 var app = app || {};
 
 (function (module) {
-    Biz.all = []    
+    Biz.all = [];
     function Biz( bizData ) {
       this.name = bizData.name;
       this.id = bizData.id;
@@ -10,12 +10,11 @@ var app = app || {};
       this.delivery = bizData.transactions.includes('delivery');
       this.yelpUrl = bizData.url;
       this.imgUrls = [];
-      bizData.photos.forEach(photo => this.imgUrls.push(photo));
       this.isOpen = !(bizData.is_closed);
 
       Biz.all.push(this);
     }
-
+    
     Biz.search = function(callback) {
       console.log('searching')
       $.ajax({
@@ -23,8 +22,7 @@ var app = app || {};
         type: 'GET',
         contentType: 'application/json',
         data: {
-          term: 'delivery',
-          categories: 'Restaurants',
+          term: 'delivery, food',
           location: 'Portland',
           radius: app.userSettings.distance,
           limit: 20,
@@ -32,9 +30,34 @@ var app = app || {};
           open_now: app.userSettings.wantOpen,
         }
       })
-        .then(data => console.log(data),
-           err => console.error(err));
+      .then(Biz.storeSearchData,
+        err => console.error(err));
     }
+        
+    Biz.storeSearchData = function(data) {
+      data.forEach(business => {
+        new Biz(business);
+        Biz.fetchBusiness(business.id);
+      });
+    }
+        
+    Biz.fetchBusiness = function(thisID) {
+
+      Biz.storeImages = function(data) {
+        thisBiz = Biz.all.filter(business => business.id === thisID)[0];
+        data.forEach(photo => thisBiz.imgUrls.push(photo));
+        console.log(thisBiz);
+      }
+
+      $.ajax({
+        url: '/yelp/business',
+        type: 'GET',
+        contentType: 'application/json',
+        data: { id: thisID }
+      })
+      .then(Biz.storeImages, err => console.error(err));
+    }
+
 
 
     module.Biz = Biz;
