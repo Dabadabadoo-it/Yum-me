@@ -1,0 +1,43 @@
+.image-container {
+  border: red solid;
+}
+
+#l-home-top-div {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+#l-home-top-div div {
+  display: inline-block;
+}
+
+#centerpiece {
+  width: 60%;
+}
+
+.side-button {
+  width: 20%;
+  text-align: center;
+}
+
+#centerpiece-background {
+  display: flex;
+  flex-direction: column;
+}
+
+#info {
+  display: block;
+  width: 100%;
+  clear: left;
+}
+
+#business-name {
+  display: inline;
+  float: left;
+}
+
+#distance {
+  display: inline;
+  float: right;
+}

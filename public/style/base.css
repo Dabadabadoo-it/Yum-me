@@ -1,0 +1,24 @@
+html, body {
+  height: 100%;
+  width: 100%;
+  font-family: 'Open Sans', sans-serif;
+}
+
+header {
+  height: 15%;
+  width: 100%
+}
+
+main, #home, #grid, #settings {
+  height: 85%;
+  width: 100%;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Comfortaa', cursive;
+}
+
+img {
+  width: 100%;
+  max-width: 100%;
+}
